@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "javascript obfuscator plugin for next.js",
   "main": "plugin.js",
+  "types": "typings/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
