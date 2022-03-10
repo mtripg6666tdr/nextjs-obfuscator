@@ -24,5 +24,9 @@
   "peerDependencies": {
     "javascript-obfuscator": "^4.0.0",
     "webpack": "^5.70.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mtripg6666tdr/nextjs-obfuscator.git"
   }
 }
