@@ -1,0 +1,28 @@
+{
+  "name": "nextjs-obfuscator",
+  "version": "1.0.0",
+  "description": "javascript obfuscator plugin for next.js",
+  "main": "plugin.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "obfuscator",
+    "obfuscation",
+    "code protection",
+    "javascript obfuscator",
+    "js obfuscator",
+    "next obfuscator",
+    "next.js obfuscator"
+  ],
+  "author": "mtripg6666tdr",
+  "license": "BSD-2-Clause",
+  "devDependencies": {
+    "javascript-obfuscator": "^4.0.0",
+    "webpack": "^5.70.0"
+  },
+  "peerDependencies": {
+    "javascript-obfuscator": "^4.0.0",
+    "webpack": "^5.70.0"
+  }
+}
