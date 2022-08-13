@@ -1,7 +1,7 @@
 const { Compilation, sources } = require("webpack");
 const { obfuscate } = require("javascript-obfuscator");
 
-class NextJSBundleObfuscatorPlugin {
+class NextJSObfuscatorPlugin {
   constructor(options, customHandler) {
     this.options = options;
     this.customHandler = customHandler || (assetPath => assetPath.startsWith("static/chunks/webpack") && assetPath.endsWith(".js"));
@@ -13,7 +13,7 @@ class NextJSBundleObfuscatorPlugin {
       PluginName,
       (compilation) => {
         compilation.hooks.processAssets.tap({
-          name: "NextJSBundleObfuscator",
+          name: "NextJSObfuscator",
           stage: Compilation.PROCESS_ASSETS_STAGE_DEV_TOOLING
         }, (assets) => {
           const logger = compilation.getLogger ? compilation.getLogger(PluginName) : console;
@@ -33,4 +33,4 @@ class NextJSBundleObfuscatorPlugin {
   }
 }
 
-module.exports = NextJSBundleObfuscatorPlugin;
+module.exports = NextJSObfuscatorPlugin;

@@ -6,11 +6,11 @@ npm i javascript-obfuscator nextjs-obfuscator -D
 ## Usage
 Write in your `next.config.js` to inject this plugin, for example:
 ```js
-const NextJSBundleObfuscatorPlugin = require("nextjs-obfuscator");
+const NextJSObfuscatorPlugin = require("nextjs-obfuscator");
 module.exports = {
   webpack: (config, {dev}) => {
     if(!dev){
-      config.plugins.push(new NextJSBundleObfuscatorPlugin({
+      config.plugins.push(new NextJSObfuscatorPlugin({
         // ...your config
       }))
     }
@@ -20,7 +20,7 @@ module.exports = {
 }
 ```
 ## API
-`new NextJSBundleObfuscatorPlugin(obfuscatorOptions, customHandler)`
+`new NextJSObfuscatorPlugin(obfuscatorOptions, customHandler)`
 ### `obfuscatorOptions`
 Type: `Object` (required)  
 This is the options of [javascript-obfuscator](https://github.com/javascript-obfuscator/javascript-obfuscator).  
