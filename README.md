@@ -14,6 +14,8 @@ module.exports = {
         // ...your config
       }))
     }
+
+    return config;
   }
 }
 ```
