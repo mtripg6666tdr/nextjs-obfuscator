@@ -18,7 +18,7 @@ declare module "nextjs-obfuscator" {
       main: boolean,
       app: boolean,
       error: boolean,
-      pages: boolean,
+      pages: boolean|string[],
       webpack: boolean,
       framework: boolean,
       buildManifest: boolean,

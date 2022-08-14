@@ -49,7 +49,7 @@ More options.
     main: boolean,
     app: boolean,
     error: boolean,
-    pages: boolean,
+    pages: boolean|string[],
     webpack: boolean,
     framework: boolean,
     buildManifest: boolean,
@@ -79,6 +79,15 @@ In the default, only webpack entry point and `_app` will be obfuscated. Obfuscat
 - `error`, `pages`  
   These files are from `pages` directory.  
   According to our experiments, obfuscating these files will break your app. However even if obfuscating these files might not break your app depending on your obfuscate options and content of your app.  
+  `pages` can also receive regex strings array to determine which files to be obfuscated. for example:
+  ```js
+  {
+    pages: [
+      "index",
+      "a\\/b",
+    ]
+  }
+  ```
   - Default: `false`
 
 - `webpack`, `buildManifest`  
