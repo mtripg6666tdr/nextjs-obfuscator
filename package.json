@@ -24,7 +24,8 @@
   },
   "peerDependencies": {
     "javascript-obfuscator": "^4.0.0",
-    "webpack": "^5.70.0"
+    "webpack": "^5.70.0",
+    "next": "^12.2.5"
   },
   "repository": {
     "type": "git",
