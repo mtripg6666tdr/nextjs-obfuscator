@@ -60,7 +60,8 @@ More options.
   log:boolean,
 }
 ```
-In the default, only webpack entry point and `_app` will be obfuscated. Obfuscating other scripts may break your app. 
+In the default, only webpack entry point and `_app` will be obfuscated. Obfuscating other scripts may break your app.   
+> For compatibility with v1.0.0, `pluginOptions` can receive a function, not only an object.
 
 ### `obfuscateFiles`
 - `main`, `framework`  
