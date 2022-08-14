@@ -1,0 +1,25 @@
+{
+  "name": "example-nextjs-obfuscated-app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "cross-env NODE_OPTIONS='--inspect' next dev",
+    "build": "next build",
+    "start": "cross-env NODE_OPTIONS='--inspect' next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "cross-env": "^7.0.3",
+    "next": "12.2.5",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "18.7.3",
+    "@types/react": "18.0.17",
+    "@types/react-dom": "18.0.6",
+    "javascript-obfuscator": "^4.0.0",
+    "nextjs-obfuscator": "file:..",
+    "typescript": "4.7.4"
+  }
+}
