@@ -1,4 +1,5 @@
 # javascript-obfuscator plugin for Next.js
+[![npm](https://img.shields.io/npm/v/nextjs-obfuscator)](https://www.npmjs.com/package/nextjs-obfuscator)
 ## Installation
 ```
 npm i javascript-obfuscator nextjs-obfuscator -D
