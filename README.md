@@ -78,7 +78,7 @@ In the default, only webpack entry point and `_app` will be obfuscated. Obfuscat
 
 - `error`, `pages`  
   These files are from `pages` directory.  
-  According to our experiments, obfuscating these files will break your app. However even if obfuscating these files might not break your app depending on your obfuscate options and content of your app.  
+  According to our experiments, obfuscating these files will break your app. However even if obfuscating these files it is possibile that your app might not be broken depending on your obfuscate options and content of your app. If so you can enable these options at your own risks.  
   `pages` can also receive regex strings array to determine which files to be obfuscated. for example:
   ```js
   {
