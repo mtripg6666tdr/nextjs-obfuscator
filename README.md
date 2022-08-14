@@ -25,6 +25,7 @@ module.exports = {
 Type: `Object` (required)  
 This is the options of [javascript-obfuscator](https://github.com/javascript-obfuscator/javascript-obfuscator).  
 Some options can break your app (for example: `splitStrings`). Please check your app works fine before deploying it.  
+In addition to that, you should set `disableConsoleOutput` to `false` because this option may prevent you from noticing that your app has been broken.
 ### `pluginOptions`
 Type: `Object` (optional)  
 More options.
@@ -85,6 +86,8 @@ In the default, only webpack entry point and `_app` will be obfuscated. Obfuscat
   You can enable only one of these two as needed basis.
   - Default: `webpack`: `true` and `buildManifest`: `false`
 
+## Disclaimer
+Using this package might break your app. You have to check your app works fine before deploying it.
 
 ## License
 [LICENSE](LICENSE)

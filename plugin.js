@@ -4,9 +4,7 @@ const { obfuscate } = require("javascript-obfuscator");
 class NextJSObfuscatorPlugin {
   constructor(options, pluginOptions = {}) {
     // store obfuscator options
-    this.options = Object.assign({}, options, {
-      disableConsoleOutput: false,
-    });
+    this.options = Object.assign({}, options);
 
     // handle deprecated feature
     if(typeof pluginOptions === "function"){
