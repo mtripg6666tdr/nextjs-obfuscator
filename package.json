@@ -1,6 +1,6 @@
 {
   "name": "nextjs-obfuscator",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "javascript obfuscator plugin for next.js",
   "main": "plugin.js",
   "types": "typings/index.d.ts",
@@ -20,12 +20,11 @@
   "license": "BSD-2-Clause",
   "devDependencies": {
     "javascript-obfuscator": "^4.0.0",
-    "webpack": "^5.70.0"
+    "webpack": "^5.74.0"
   },
   "peerDependencies": {
     "javascript-obfuscator": "^4.0.0",
-    "webpack": "^5.70.0",
-    "next": "^12.2.5"
+    "next": "^12.2.5 || ^13.0.1"
   },
   "repository": {
     "type": "git",
