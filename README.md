@@ -25,7 +25,7 @@ module.exports = {
 ### `obfuscatorOptions`
 Type: `Object` (required)  
 This is the options of [javascript-obfuscator](https://github.com/javascript-obfuscator/javascript-obfuscator).  
-Some options can break your app (for example: `splitStrings`). Please check your app works fine before deploying it.  
+Some options can break your app. Please check your app works fine before deploying it.  
 In addition to that, you should set `disableConsoleOutput` to `false` because this option may prevent you from noticing that your app has been broken.
 ### `pluginOptions`
 Type: `Object` (optional)  
