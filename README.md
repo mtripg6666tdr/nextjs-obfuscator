@@ -100,7 +100,7 @@ In the default, only webpack entry point will be obfuscated. Obfuscating other s
     - `buildManifest`: `false`
 
 ## Disclaimer
-Using this package might break your app. You have to check your app works fine before deploying it.
+Using this plugin might break your app. You have to check your app works fine before deploying it.
 
 ## License
 [LICENSE](LICENSE)
