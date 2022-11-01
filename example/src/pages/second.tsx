@@ -11,7 +11,7 @@ export default function SecondPage(){
       <p style={style}>This is the 2nd test page!</p>
       <p style={style}>
         <Link href="/">
-          <a>Return to top</a>
+          <span>Return to top</span>
         </Link>
       </p>
     </div>

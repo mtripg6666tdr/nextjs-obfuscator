@@ -17,8 +17,8 @@ module.exports = {
             error: false,
             pages: false,
             
-            webpack: false,
-            buildManifest: true,
+            webpack: true,
+            buildManifest: false,
           },
           log: true,
         })

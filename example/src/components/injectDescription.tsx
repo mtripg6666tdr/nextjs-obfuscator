@@ -9,7 +9,7 @@ export default function InjectDescription(){
       fontSize: "1.4rem",
     }}>*This website is obfuscated by <a href={GitHubPageUrl}>nextjs-obfuscator</a> powered by javascript-obfuscator.</p>
     <Link href="/second">
-      <a>Go to 2nd page.</a>
+      <span>Go to 2nd page.</span>
     </Link>
     </>
   )
