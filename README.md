@@ -25,11 +25,12 @@ module.exports = {
 ### `obfuscatorOptions`
 Type: `Object` (required)  
 This is the options of [javascript-obfuscator](https://github.com/javascript-obfuscator/javascript-obfuscator).  
-Some options can break your app. Please check your app works fine before deploying it.  
-In addition to that, you should set `disableConsoleOutput` to `false` because this option may prevent you from noticing that your app has been broken.
+Some options can break your app so you should check your app works fine before deploying it.  
+> **Note**  
+> `disableConsoleOutput` should be set to `false` because this option may prevent you from finding that your app has been broken.
 ### `pluginOptions`
 Type: `Object` (optional)  
-More options.
+More options for this plugin.
 ```ts
 {
   /**
@@ -55,13 +56,14 @@ More options.
     buildManifest: boolean,
   },
   /**
-   * indicates whether the plugin logs to console
+   * set whether the plugin logs to console
+   * This can be useful in case that you want to know what files are passed to this plugin on compilation and to set some additional files to be obfuscated.
    * Default: false
    */
   log:boolean,
 }
 ```
-In the default, only webpack entry point will be obfuscated. Obfuscating other scripts may break your app.   
+In the default, only the `_app.tsx`(or `_app.jsx`) and the webpack entry point will be obfuscated. Obfuscating other scripts can break your app.   
 > For compatibility with v1.0.0, `pluginOptions` can receive a function, not only an object.
 
 ### `obfuscateFiles`
@@ -78,7 +80,7 @@ In the default, only webpack entry point will be obfuscated. Obfuscating other s
 
 - `error`, `pages`  
   These files are from `pages` directory.  
-  According to our experiments, obfuscating these files will break your app. However even if obfuscating these files it is possibile that your app might not be broken depending on your obfuscate options and content of your app. If so you can enable these options at your own risks.  
+  According to my experiments, obfuscating these files will break nextjs apps, however you can enable these options at your own risks if you see this doesn't break.  
   `pages` can also receive regex strings array to determine which files to be obfuscated. for example:
   ```js
   {
@@ -93,14 +95,14 @@ In the default, only webpack entry point will be obfuscated. Obfuscating other s
 - `webpack`, `buildManifest`  
   The `webpack` is the entry point of webpack.  
   The `buildManifest` is the build manifest file which contains information of your whole app.  
-  According to our experiments, obfuscating both of these two files will break your app.  
+  According to my experiments, obfuscating both of these two files will break your app.  
   You can enable only one of these two as needed basis.
   - Default: 
     - `webpack`: `true`
     - `buildManifest`: `false`
 
 ## Disclaimer
-Using this plugin might break your app. You have to check your app works fine before deploying it.
+Again, using this plugin can break your nextjs app so you SHOULD check carefully your app works fine.
 
 ## License
 [LICENSE](LICENSE)
