@@ -75,8 +75,8 @@ In the default, only the `_app.tsx`(or `_app.jsx`) and the webpack entry point w
 - `app`  
   This is from `_app.tsx` or `_app.jsx`.  
   According to our experiments, app will be fine even if you obfuscate this file.  
-  You may set this to true as needed basis.
-  - Default: `false`  
+  You may set this to false as needed basis.
+  - Default: `true`  
 
 - `error`, `pages`  
   These files are from `pages` directory.  
