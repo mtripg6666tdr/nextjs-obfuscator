@@ -24,6 +24,7 @@ declare module "nextjs-obfuscator" {
       webpack: boolean,
       framework: boolean,
       buildManifest: boolean,
+      splittedChunks: boolean,
     }>,
     /**
      * indicates whether the plugin logs to console
