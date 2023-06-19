@@ -12,7 +12,7 @@ class NextJSObfuscatorPlugin {
         customHandler: pluginOptions,
       };
     }
-    
+
     const { customHandler, customMatch, log } = pluginOptions;
     this.log = !!log;
 
