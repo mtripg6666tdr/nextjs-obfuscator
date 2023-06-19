@@ -1,4 +1,5 @@
 import Link from "next/link";
+import SharedComponent from "../components/sharedComponent";
 
 export default function SecondPage(){
   const style = {
@@ -10,6 +11,7 @@ export default function SecondPage(){
     <div>
       <p style={style}>This is the 2nd test page!</p>
       <p style={style}>
+        <SharedComponent />
         <Link href="/">
           <span>Return to top</span>
         </Link>

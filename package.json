@@ -19,7 +19,7 @@
   "author": "mtripg6666tdr",
   "license": "BSD-2-Clause",
   "dependencies": {
-    "webpack": "^5.74.0"
+    "webpack": "^5.0.0"
   },
   "devDependencies": {
     "javascript-obfuscator": "^4.0.0"
