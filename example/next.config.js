@@ -1,3 +1,4 @@
+// @ts-check
 const NextJSObfuscatorPlugin = require("nextjs-obfuscator");
 const obfuscatorOptions = require("./obfuscator-options");
 
@@ -16,9 +17,11 @@ module.exports = {
 
             error: false,
             pages: false,
-            
+
             webpack: true,
             buildManifest: false,
+
+            splittedChunks: false,
           },
           log: true,
         })

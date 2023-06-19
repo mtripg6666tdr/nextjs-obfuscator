@@ -25,6 +25,7 @@ class NextJSObfuscatorPlugin {
       webpack: true,
       framework: false,
       buildManifest: false,
+      splittedChunks: false,
     }, pluginOptions.obfuscateFiles);
 
     // handle when boolean passed in pages option
@@ -50,6 +51,7 @@ class NextJSObfuscatorPlugin {
         [obfuscateFiles.webpack, "static\\/chunks\\/webpack" + hashAndExt],
         [obfuscateFiles.framework, "static\\/chunks\\/framework" + hashAndExt],
         [obfuscateFiles.buildManifest, "static\\/[^/]+\\/_buildManifest\\.js"],
+        [obfuscateFiles.splittedChunks, "static\\/chunks\\/\\d+" + hashAndExt],
       ].some(([condition, pattern, additional]) => {
         return condition && assetPath.match(new RegExp(`^${pattern}${additional || ""}$`, "g"));
       })){
