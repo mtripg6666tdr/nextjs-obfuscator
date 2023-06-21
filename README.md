@@ -37,7 +37,7 @@ require("nextjs-obfuscator")(<a href="#obfuscatoroptions">obfuscatorOptions</a>,
 </pre>
 ### `obfuscatorOptions`
 Type: `Object` (required)  
-This is [the options](https://github.com/javascript-obfuscator/javascript-obfuscator#javascript-obfuscator-options) of [javascript-obfuscator](https://github.com/javascript-obfuscator/javascript-obfuscator), but there are some important things.  
+This is [the options](https://github.com/javascript-obfuscator/javascript-obfuscator#javascript-obfuscator-options) of [javascript-obfuscator](https://github.com/javascript-obfuscator/javascript-obfuscator), but there are some important notes:  
 * [`disableConsoleOutput`](https://github.com/javascript-obfuscator/javascript-obfuscator#disableconsoleoutput) should be set to `false` and you can easily notice the error logging by React on console. If they are present, they indicate your app has been broken.
 * There are some options that MUST NOT set:
   * [`inputFileName`](https://github.com/javascript-obfuscator/javascript-obfuscator#inputfilename)
