@@ -1,9 +1,13 @@
-import type webpack from "webpack";
-import { InternalNextjsObfuscatorOptions, LoggerSymbol } from "./type";
+import type { InternalNextjsObfuscatorOptions } from "./type";
 import type { RawSourceMap } from "source-map";
+import type webpack from "webpack";
+
 import * as path from "path";
+
 import { obfuscate } from "javascript-obfuscator";
 import { transfer as transferSourceMap } from "multi-stage-sourcemap";
+
+import { LoggerSymbol } from "./type";
 
 function loader(this: webpack.LoaderContext<InternalNextjsObfuscatorOptions>, source: string, map: RawSourceMap){
   const moduleRelativePath = path.relative(this.rootContext, this.resourcePath);
@@ -25,7 +29,8 @@ function loader(this: webpack.LoaderContext<InternalNextjsObfuscatorOptions>, so
 
   logger("Obfuscated:", moduleRelativePath, source.length, "->", obfuscated.length);
 
-  let sourceMap: string | undefined = undefined;
+  // eslint-disable-next-line @typescript-eslint/init-declarations
+  let sourceMap: string | undefined;
   if(sourceMapRequired){
     sourceMap = transferSourceMap({
       fromSourceMap: obfuscationResult.getSourceMap(),

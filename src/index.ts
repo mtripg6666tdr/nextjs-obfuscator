@@ -1,9 +1,12 @@
 import type { NextConfig } from "next";
-import webpack, { sources } from "webpack";
-import { Minimatch } from "minimatch";
+
 import * as path from "path";
-import { LoggerSymbol, type NextjsObfuscatorOptions } from "./type";
+
 import { obfuscate } from "javascript-obfuscator";
+import { Minimatch } from "minimatch";
+import webpack, { sources } from "webpack";
+
+import { LoggerSymbol, type NextjsObfuscatorOptions } from "./type";
 
 type PluginOptions = {
   enabled: boolean | "detect",
@@ -36,11 +39,11 @@ type ObjectWithUnconstantString<T extends Record<any, any>> = {
       ? number
       : Required<T>[key] extends string[]
         ? string[]
-          : Required<T>[key] extends number[]
-            ? number[]
-              : Required<T>[key] extends Record<any, any>
-                ? Partial<ObjectWithUnconstantString<T[key]>>
-                  : T[key]
+        : Required<T>[key] extends number[]
+          ? number[]
+          : Required<T>[key] extends Record<any, any>
+            ? Partial<ObjectWithUnconstantString<T[key]>>
+            : T[key]
 };
 
 function main(
@@ -65,19 +68,18 @@ function main(
     additionalModules: [],
   }, pluginOptions.obfuscateFiles);
 
-  const logger: ((...message: string[]) => void) = pluginOptions!.log ? console.log.bind(console, "\n") : () => {};
-  const matchers = pluginOptions!.patterns!.map(pattern => new Minimatch(pattern));
+  const logger: ((...message: string[]) => void) = pluginOptions.log ? console.log.bind(console, "\n") : () => {};
+  const matchers = pluginOptions.patterns!.map(pattern => new Minimatch(pattern));
 
-  return function(config: NextConfig) {
-    if(!config || typeof config !== "object"){
+  return function(nextConfig: NextConfig) {
+    if(!nextConfig || typeof nextConfig !== "object"){
       throw new TypeError("Invalid configuration object passed.");
     }
 
     const moduleRegEx = /\.(tsx|ts|js|cjs|mjs|jsx)$/;
-    const nodeModuleRegEx = /node_modules/;
 
-    const originalWebpackFn = config.webpack;
-    config.webpack = function(config: webpack.Configuration, context){
+    const originalWebpackFn = nextConfig.webpack;
+    nextConfig.webpack = function(config: webpack.Configuration, context){
       // @ts-ignore
       if(pluginOptions.writeConfig){
         require("fs").writeFileSync(
@@ -102,7 +104,7 @@ function main(
 
       const moduleMatcher = (value: string) => {
         if(moduleRegEx.test(value)){
-          if(!nodeModuleRegEx.test(value)){
+          if(!value.includes("node_modules")){
             const relativePath = `.${path.sep}${path.relative(basePath, value)}`;
             logger("Detected:", relativePath);
 
@@ -126,11 +128,11 @@ function main(
           }
         }
         return false;
-      }
+      };
 
       // obfuscate only if the chunk is for browser
       if(
-        (pluginOptions!.enabled === true || (pluginOptions!.enabled === "detect" && !context.dev))
+        pluginOptions!.enabled === true || (pluginOptions!.enabled === "detect" && !context.dev)
       ){
         if(
           !context.isServer
@@ -189,12 +191,12 @@ function main(
       // }
 
       if(originalWebpackFn){
-        return originalWebpackFn(config, context)
+        return originalWebpackFn(config, context);
       }
       return config;
     };
 
-    return config;
+    return nextConfig;
   };
 }
 
@@ -216,7 +218,7 @@ class NextJSObfuscatorPlugin {
     });
   }
 
-  apply (compiler: webpack.Compiler) {
+  apply(compiler: webpack.Compiler) {
     const PluginName = this.constructor.name;
 
     compiler.hooks.compilation.tap(
@@ -224,7 +226,7 @@ class NextJSObfuscatorPlugin {
       (compilation) => {
         compilation.hooks.processAssets.tap({
           name: PluginName.slice(0, -6),
-          stage: webpack.Compilation.PROCESS_ASSETS_STAGE_DEV_TOOLING
+          stage: webpack.Compilation.PROCESS_ASSETS_STAGE_DEV_TOOLING,
         }, (assets) => {
           this.logger("Initialized");
           const assetNames = Object.keys(assets);
@@ -248,6 +250,6 @@ class NextJSObfuscatorPlugin {
           }
         });
       }
-    )
+    );
   }
 }
