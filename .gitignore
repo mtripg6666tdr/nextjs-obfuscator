@@ -1,1 +1,20 @@
 node_modules
+index.js
+loader.js
+loader.d.ts
+type.js
+type.d.ts
+index.d.ts
+*.temp.*
+*.tmp.*
+*.temp
+*.tmp
+*.log
+
+# VSCode
+**/.vscode/*
+!**/.vscode/settings.json
+!**/.vscode/tasks.json
+!**/.vscode/launch.json
+!**/.vscode/extensions.json
+!**/.vscode/*.code-snippets

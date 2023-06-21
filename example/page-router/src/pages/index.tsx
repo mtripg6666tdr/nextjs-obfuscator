@@ -4,6 +4,10 @@ import Image from 'next/image'
 import InjectDescription from '../components/injectDescription'
 import styles from '../styles/Home.module.css'
 import Shared from "../components/sharedComponent";
+// this is just a test for module obfuscation
+// @ts-ignore
+import object from "es6-object-assign";
+console.log(object);
 
 const Home: NextPage = () => {
   return (

@@ -1,6 +1,3 @@
-// @ts-check
-
-/** @type {import("javascript-obfuscator").ObfuscatorOptions} */
 module.exports = {
   compact: true,
   controlFlowFlattening: false,

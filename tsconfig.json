@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "ES2019",
+    "module": "CommonJS",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "strict": true,
+    "outDir": "./",
+    "declaration": true,
+    "declarationDir": ".",
+    "emitDeclarationOnly": true,
+    "skipLibCheck": true
+  },
+  "include": [
+    "./src/**/*.ts"
+  ],
+  "exclude": [
+    "**/node_modules"
+  ]
+}
