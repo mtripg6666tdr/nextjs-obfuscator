@@ -80,8 +80,8 @@ More options for this plugin. All properties are optional.
 |`log`|`boolean`|`false`|If set to true, the plugin will use `console.log` as logger. Otherwise it uses webpack's standard logger.|
 
 ## How it works
-* This plugin injects custom loader to obfuscate project files and external modules.
-* This plugin injects custom plugin to obfuscate `buildManifest`, `ssgManifest`, `webpack` assets.
+* This plugin inserts a custom loader to obfuscate project files and external modules.
+* This plugin inserts a custom plugin to obfuscate `buildManifest`, `ssgManifest`, `webpack` assets.
 
 ## Disclaimer
 Using this plugin can break your next.js app so you have to check carefully your app works fine.
