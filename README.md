@@ -1,114 +1,87 @@
-# javascript-obfuscator plugin for Next.js
+# javascript-obfuscator plugin v2 for Next.js
 [![npm](https://img.shields.io/npm/v/nextjs-obfuscator)](https://www.npmjs.com/package/nextjs-obfuscator)
-## Installation
-```
-npm i javascript-obfuscator nextjs-obfuscator -D
-```
-## Usage
-Write in your `next.config.js` to inject this plugin, for example:
-```js
-const NextJSObfuscatorPlugin = require("nextjs-obfuscator");
-module.exports = {
-  webpack: (config, {dev}) => {
-    if(!dev){
-      config.plugins.push(new NextJSObfuscatorPlugin({
-        // ...your config
-      }))
-    }
 
-    return config;
-  }
-}
+The `nextjs-obfuscator` enables you to make your Next.js app difficult to be reverse-engineerred, using [javascript-obfuscator](https://github.com/javascript-obfuscator/javascript-obfuscator).
+
+### ℹ️ If you are looking for README for v1, see [here](https://github.com/mtripg6666tdr/nextjs-obfuscator/tree/v1#readme).
+
+## Installation
+You have to install javascript-obfuscator separately.
+
+On npm:
 ```
+npm i -D javascript-obfuscator nextjs-obfuscator
+```
+On yarn:
+```
+yarn add -D javascript-obfuscator nextjs-obfuscator
+```
+
+## Usage
+Wrap your configuration in your `next.config.js` to use this plugin, for example:
+```js
+const withNextJsObfuscator = require("nextjs-obfuscator")(obfuscatorOptions, pluginOptions);
+
+/** @type {import('next').NextConfig} */
+const nextConfig = withNextJsObfuscator({
+  // ... your next.js configuration
+});
+
+module.exports = nextConfig;
+```
+If you use some other plugins, we recommend applying this plugin later than any other ones because at most cases the obfuscation will change large portion of the code.
+
 ## API
-`new NextJSObfuscatorPlugin(obfuscatorOptions, pluginOptions)`
+<pre>
+require("nextjs-obfuscator")(<a href="#obfuscatoroptions">obfuscatorOptions</a>, <a href="#pluginoptions">pluginOptions</a>)
+</pre>
 ### `obfuscatorOptions`
 Type: `Object` (required)  
-This is the options of [javascript-obfuscator](https://github.com/javascript-obfuscator/javascript-obfuscator).  
-Some options can break your app so you should check your app works fine before deploying it.  
-> **Note**  
-> `disableConsoleOutput` should be set to `false` because this option may prevent you from finding that your app has been broken.
+This is [the options](https://github.com/javascript-obfuscator/javascript-obfuscator#javascript-obfuscator-options) of [javascript-obfuscator](https://github.com/javascript-obfuscator/javascript-obfuscator), but there are some important notes:  
+* [`disableConsoleOutput`](https://github.com/javascript-obfuscator/javascript-obfuscator#disableconsoleoutput) should be set to `false` and you can easily notice the error logging by React on console. If they are present, they indicate your app has been broken.
+* There are some options that MUST NOT set:
+  * [`inputFileName`](https://github.com/javascript-obfuscator/javascript-obfuscator#inputfilename)
+  * [`sourceMapBaseUrl`](https://github.com/javascript-obfuscator/javascript-obfuscator#sourcemapbaseurl)
+  * [`sourceMapFileName`](https://github.com/javascript-obfuscator/javascript-obfuscator#sourcemapfilename)
+  * [`sourceMapMode`](https://github.com/javascript-obfuscator/javascript-obfuscator#sourcemapmode)
+  * [`sourceMapSourcesMode`](https://github.com/javascript-obfuscator/javascript-obfuscator#sourcemapsourcesmode)
+  
+  These options will be set by the nextjs-obfuscator plugin internally if necessary.
+
 ### `pluginOptions`
 Type: `Object` (optional)  
-More options for this plugin.
+More options for this plugin. All properties are optional.
 ```ts
 {
-  /**
-   * This handler determines which chunks will be obfuscated. We do not recommend to use this arg.  
-   * @deprecated this option is for compatiblity with v1.0.0
-   */
-  customHandler:customHandler,
-  /**
-   * a custom regular expression to be used to obfuscate custom files
-   */
-  customMatch:RegExp,
-  /**
-   * determines which files to be obfuscated
-   * See below for more details
-   */
-  obfuscateFiles:{
-    main: boolean,
-    app: boolean,
-    error: boolean,
-    pages: boolean|string[],
-    webpack: boolean,
-    framework: boolean,
+  enabled: boolean | "detect",
+  patterns: string[],
+  obfuscateFiles: Partial<{
     buildManifest: boolean,
-    splittedChunks: boolean,
-  },
-  /**
-   * set whether the plugin logs to console
-   * This can be useful in case that you want to know what files are passed to this plugin on compilation and to set some additional files to be obfuscated.
-   * Default: false
-   */
-  log:boolean,
-}
+    ssgManifest: boolean,
+    webpack: boolean,
+    additionalModules: string[],
+  }>,
+  log: boolean,
+};
 ```
-In the default, only the `_app.tsx`(or `_app.jsx`) and the webpack entry point will be obfuscated. Obfuscating other scripts can break your app.   
-> For compatibility with v1.0.0, `pluginOptions` can receive a function, not only an object.
 
-### `obfuscateFiles`
-- `main`, `framework`  
-  These files are from various libraries such as `react` or `react-dom`.  
-  Generally these files should NOT be obfuscated.  
-  - Default: `false`  
+|Option   |Type                                |Default Value|Description|
+|---------|------------------------------------|-------------|-----------|
+|`enabled`|<code>boolean &#124; "detect"</code>|`"detect"`|Indicates if the plugin is enabled or not.<br/>If `"detect"` specified, the plugin will be enabled only when building for production.|
+|`patterns`|`string[]`|<code>["./**/*.(js&#124;jsx&#124;ts&#124;tsx)"]</code>|Glob patterns to determine which files to be obfuscated. They must be relative paths from the directory where `next.config.js` is placed.|
+|`obfuscateFiles`|`Object`||Additioanl files to be obfuscated.|
+|`obfuscateFiles.buildManifest`|`boolean`|`false`|If set to true, the plugin will obfuscate `_buildManifest.js`|
+|`obfuscateFiles.ssgManifest`|`boolean`|`false`|If set to true, the plugin will obfuscate `_ssgManifest.js`|
+|`obfuscateFiles.webpaack`|`boolean`|`false`|If set to true, the plugin will obfuscate `webpack.js`, which is an entry point.|
+|`obfuscateFiles.additioanlModules`|`string[]`|`[]`|Names of additioanl external modules to be obfuscated. Convenient if you are using custom npm package for instance. Use like `["module-a", "module-b", ...]`.|
+|`log`|`boolean`|`false`|If set to true, the plugin will use `console.log` as logger. Otherwise it uses webpack's standard logger.|
 
-- `app`  
-  This is from `_app.tsx` or `_app.jsx`.  
-  According to our experiments, app will be fine even if you obfuscate this file.  
-  You may set this to false as needed basis.
-  - Default: `true`  
-
-- `error`, `pages`  
-  These files are from `pages` directory.  
-  According to my experiments, obfuscating these files will break nextjs apps, however you can enable these options at your own risks if you see this doesn't break.  
-  `pages` can also receive regex strings array to determine which files to be obfuscated. for example:
-  ```js
-  {
-    pages: [
-      "index",
-      "a\\/b",
-    ]
-  }
-  ```
-  - Default: `false`
-
-- `webpack`, `buildManifest`  
-  The `webpack` is the entry point of webpack.  
-  The `buildManifest` is the build manifest file which contains information of your whole app.  
-  According to my experiments, obfuscating both of these two files will break your app.  
-  You can enable only one of these two as needed basis.
-  - Default: 
-    - `webpack`: `true`
-    - `buildManifest`: `false`
-
-- `splittedChunks`  
-  Files including shared modules by multiple pages, that are generated by next.js when optimizing build artifacts.
-  You can enable this as needed basis.
-  - Default: `false`
+## How it works
+* This plugin injects custom loader to obfuscate project files and external modules.
+* This plugin injects custom plugin to obfuscate `buildManifest`, `ssgManifest`, `webpack` assets.
 
 ## Disclaimer
-Again, using this plugin can break your nextjs app so you SHOULD check carefully your app works fine.
+Using this plugin can break your next.js app so you have to check carefully your app works fine.
 
 ## License
 [LICENSE](LICENSE)
