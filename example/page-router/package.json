@@ -20,7 +20,6 @@
     "@types/react": "18.0.17",
     "@types/react-dom": "18.0.6",
     "javascript-obfuscator": "^4.0.0",
-    "nextjs-obfuscator": "file:..",
     "typescript": "4.7.4"
   }
 }

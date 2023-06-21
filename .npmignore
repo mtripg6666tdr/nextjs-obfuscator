@@ -1,1 +1,5 @@
 example
+src
+tsconfig.json
+.swcrc
+.git*
