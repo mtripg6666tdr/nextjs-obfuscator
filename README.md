@@ -1,11 +1,13 @@
 # javascript-obfuscator plugin v2 for Next.js
 [![npm](https://img.shields.io/npm/v/nextjs-obfuscator)](https://www.npmjs.com/package/nextjs-obfuscator)
 
-The `nextjs-obfuscator` enables you to make your Next.js app difficult to be reverse-engineerred.
+The `nextjs-obfuscator` enables you to make your Next.js app difficult to be reverse-engineerred, using [javascript-obfuscator](https://github.com/javascript-obfuscator/javascript-obfuscator).
 
 ### ℹ️ If you are looking for README for v1, see [here](https://github.com/mtripg6666tdr/nextjs-obfuscator/tree/v1#readme).
 
 ## Installation
+You have to install javascript-obfuscator separately.
+
 On npm:
 ```
 npm i -D javascript-obfuscator nextjs-obfuscator
@@ -27,7 +29,7 @@ const nextConfig = withNextJsObfuscator({
 
 module.exports = nextConfig;
 ```
-If you uses some other plugins, we recommend applying later than any other plugins because at most cases the obfuscation will change large portion of the code.
+If you use some other plugins, we recommend applying this plugin later than any other ones because at most cases the obfuscation will change large portion of the code.
 
 ## API
 <pre>
