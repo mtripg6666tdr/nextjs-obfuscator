@@ -1,9 +1,9 @@
-import { ObfuscatorOptions } from "javascript-obfuscator";
+import type { ObfuscatorOptions } from "javascript-obfuscator";
 
 type OmitKeys<T, U extends string> = T & { [key in U]: never };
 
 export type NextjsObfuscatorOptions = OmitKeys<
-  ObfuscatorOptions,
+ObfuscatorOptions,
   | "inputFileName"
   | "sourceMapBaseUrl"
   | "sourceMapFileName"
@@ -14,5 +14,5 @@ export type NextjsObfuscatorOptions = OmitKeys<
 export const LoggerSymbol = Symbol.for("NextJsObfuscatorLogger");
 
 export type InternalNextjsObfuscatorOptions = NextjsObfuscatorOptions & {
-  [LoggerSymbol]: (...messages: any[]) => void;
-}
+  [LoggerSymbol]: (...messages: any[]) => void,
+};
