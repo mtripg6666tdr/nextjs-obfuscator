@@ -12,6 +12,7 @@ const withNextJSObfuscatorPlugin = require("../..")(obfuscatorOptions, {
 
 /** @type {import('next').NextConfig} */
 module.exports = withNextJSObfuscatorPlugin({
+  productionBrowserSourceMaps: true,
   eslint: {
     ignoreDuringBuilds: true,
   }

@@ -3,6 +3,7 @@ import type { RawSourceMap } from "source-map";
 import type webpack from "webpack";
 
 import * as path from "path";
+// import fs from "fs";
 
 import { obfuscate } from "javascript-obfuscator";
 import { transfer as transferSourceMap } from "multi-stage-sourcemap";
@@ -31,12 +32,18 @@ function loader(this: webpack.LoaderContext<InternalNextjsObfuscatorOptions>, so
 
   // eslint-disable-next-line @typescript-eslint/init-declarations
   let sourceMap: string | undefined;
-  if(sourceMapRequired){
+  if(map && sourceMapRequired){
     sourceMap = transferSourceMap({
       fromSourceMap: obfuscationResult.getSourceMap(),
       toSourceMap: map,
     });
   }
+
+  // const now = Date.now();
+  // fs.writeFileSync(`./${now}.pre.js`, source);
+  // map && fs.writeFileSync(`./${now}.pre.js.map`, JSON.stringify(map));
+  // fs.writeFileSync(`./${now}.post.js`, obfuscated);
+  // sourceMap && fs.writeFileSync(`./${now}.post.js.map`, sourceMap);
 
   this.callback(null, obfuscated, sourceMap);
 }

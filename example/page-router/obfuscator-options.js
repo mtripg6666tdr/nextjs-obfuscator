@@ -23,4 +23,5 @@ module.exports = {
     "hexadecimal-number"
   ],
   target: "browser",
+  sourceMap: true,
 }
