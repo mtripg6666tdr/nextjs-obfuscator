@@ -1,9 +1,10 @@
 // @ts-check
-const NextJSObfuscatorPlugin = require("nextjs-obfuscator");
+const NextJSObfuscatorPlugin = require("..");
 const obfuscatorOptions = require("./obfuscator-options");
 
 /** @type {import('next').NextConfig} */
 module.exports = {
+  productionBrowserSourceMaps: true,
   webpack: (config, {dev}) => {
     if(!dev || true){
       config.plugins.push(

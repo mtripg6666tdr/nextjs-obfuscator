@@ -19,6 +19,7 @@
   "author": "mtripg6666tdr",
   "license": "BSD-2-Clause",
   "dependencies": {
+    "multi-stage-sourcemap": "^0.3.1",
     "webpack": "^5.0.0"
   },
   "devDependencies": {
