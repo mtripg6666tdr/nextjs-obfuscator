@@ -5,9 +5,6 @@ The `nextjs-obfuscator` enables you to make your Next.js app difficult to be rev
 
 ### ℹ️ If you are looking for README for v1, see [here](https://github.com/mtripg6666tdr/nextjs-obfuscator/tree/v1#readme).
 
-> **Warning**  
-> v.2 is currently still in beta. Any comments or issues are welcome.
-
 ## Installation
 You have to install javascript-obfuscator separately.
 
