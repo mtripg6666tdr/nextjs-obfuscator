@@ -1,10 +1,17 @@
+// @ts-check
 const { Compilation, sources } = require("webpack");
 const { obfuscate } = require("javascript-obfuscator");
+const { transfer } = require("multi-stage-sourcemap");
 
 class NextJSObfuscatorPlugin {
   constructor(options, pluginOptions = {}) {
     // store obfuscator options
     this.options = Object.assign({}, options);
+
+    /** @type {string} */
+    this.baseIdentifiersPrefix = "a";
+    /** @type {number} */
+    this.identifiersPrefixCounter = 0;
 
     // handle deprecated feature
     if(typeof pluginOptions === "function"){
@@ -61,6 +68,7 @@ class NextJSObfuscatorPlugin {
     });
   }
 
+  /** @param {import("webpack").Compiler} compiler */
   apply (compiler) {
     const PluginName = this.constructor.name;
     compiler.hooks.compilation.tap(
@@ -70,7 +78,7 @@ class NextJSObfuscatorPlugin {
           name: PluginName.slice(0, -6),
           stage: Compilation.PROCESS_ASSETS_STAGE_DEV_TOOLING
         }, (assets) => {
-          const logger = compilation.getLogger && !this.log ? compilation.getLogger(PluginName) : console;
+          const logger = !this.log ? compilation.getLogger(PluginName) : console;
 
           logger.log("Initialized");
           const assetNames = Object.keys(assets);
@@ -82,7 +90,9 @@ class NextJSObfuscatorPlugin {
             .forEach(assetPath => {
               const asset = assets[assetPath];
               if(!asset) return;
+              /** @type {string} */// @ts-ignore
               const source = asset.source();
+              const map = asset.map();
               const options = (() => {
                 if(assetPath.match(/^static\/chunks\/pages\//)){
                   const options = Object.assign({}, this.options, {
@@ -100,9 +110,23 @@ class NextJSObfuscatorPlugin {
                   });
                 }
               })();
-              const obfuscated = obfuscate(source, options).getObfuscatedCode();
-              assets[assetPath] = new sources.RawSource(obfuscated);
-              logger.log("Obfuscated: ", assetPath, "(" + asset.size() + "bytes", "->", obfuscated.length + "bytes,", "target:", options.target + ")");
+              const obfuscated = obfuscate(source, Object.assign({}, options, {
+                inputFileName: assetPath,
+                sourceMapMode: "separate",
+                sourceMapFileName: assetPath + ".map",
+                identifiersPrefix: `${this.baseIdentifiersPrefix}${this.identifiersPrefixCounter++}`
+              }));
+              const code = obfuscated.getObfuscatedCode();
+              if(map && options.sourceMap){
+                const transferredMap = transfer({
+                  fromSourceMap: obfuscated.getSourceMap(),
+                  toSourceMap: map,
+                });
+                assets[assetPath] = new sources.SourceMapSource(code, assetPath, transferredMap);
+              }else{
+                assets[assetPath] = new sources.RawSource(code);
+              }
+              logger.log("Obfuscated: ", assetPath, "(" + source.length + "bytes", "->", code.length + "bytes,", "target:", options.target + ")");
             });
         });
       }
