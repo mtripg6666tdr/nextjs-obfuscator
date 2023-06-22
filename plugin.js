@@ -113,7 +113,6 @@ class NextJSObfuscatorPlugin {
               const obfuscated = obfuscate(source, Object.assign({}, options, {
                 inputFileName: assetPath,
                 sourceMapMode: "separate",
-                sourceMapFileName: assetPath + ".map",
                 identifiersPrefix: `${this.baseIdentifiersPrefix}${this.identifiersPrefixCounter++}`
               }));
               const code = obfuscated.getObfuscatedCode();
