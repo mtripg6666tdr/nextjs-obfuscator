@@ -1,6 +1,6 @@
 {
   "name": "nextjs-obfuscator",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "javascript obfuscator plugin for next.js",
   "main": "./index.js",
   "types": "./index.d.ts",
