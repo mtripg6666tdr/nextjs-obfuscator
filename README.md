@@ -72,7 +72,7 @@ More options for this plugin. All properties are optional.
 |`obfuscateFiles`|`Object`||Additioanl files to be obfuscated.|
 |`obfuscateFiles.buildManifest`|`boolean`|`false`|If set to true, the plugin will obfuscate `_buildManifest.js`|
 |`obfuscateFiles.ssgManifest`|`boolean`|`false`|If set to true, the plugin will obfuscate `_ssgManifest.js`|
-|`obfuscateFiles.webpaack`|`boolean`|`false`|If set to true, the plugin will obfuscate `webpack.js`, which is an entry point.|
+|`obfuscateFiles.webpack`|`boolean`|`false`|If set to true, the plugin will obfuscate `webpack.js`, which is an entry point.|
 |`obfuscateFiles.additioanlModules`|`string[]`|`[]`|Names of additioanl external modules to be obfuscated. Convenient if you are using custom npm package for instance. Use like `["module-a", "module-b", ...]`.|
 |`log`|`boolean`|`false`|If set to true, the plugin will use `console.log` as logger. Otherwise it uses webpack's standard logger.|
 
