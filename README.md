@@ -1,7 +1,7 @@
 # javascript-obfuscator plugin v2 for Next.js
 [![npm](https://img.shields.io/npm/v/nextjs-obfuscator)](https://www.npmjs.com/package/nextjs-obfuscator)
 
-The `nextjs-obfuscator` enables you to make your Next.js app difficult to be reverse-engineerred, using [javascript-obfuscator](https://github.com/javascript-obfuscator/javascript-obfuscator).
+The `nextjs-obfuscator` enables you to make your Next.js app difficult to be reverse-engineered, using [javascript-obfuscator](https://github.com/javascript-obfuscator/javascript-obfuscator).
 
 ### ℹ️ If you are looking for README for v1, see [here](https://github.com/mtripg6666tdr/nextjs-obfuscator/tree/v1#readme).
 
@@ -29,7 +29,7 @@ const nextConfig = withNextJsObfuscator({
 
 module.exports = nextConfig;
 ```
-If you use some other plugins, we recommend applying this plugin later than any other ones because at most cases the obfuscation will change large portion of the code.
+If you use some other plugins, we recommend applying this plugin later than any other ones because in most cases the obfuscation will change a large portion of the code.
 
 ## API
 <pre>
@@ -69,19 +69,19 @@ More options for this plugin. All properties are optional.
 |---------|------------------------------------|-------------|-----------|
 |`enabled`|<code>boolean &#124; "detect"</code>|`"detect"`|Indicates if the plugin is enabled or not.<br/>If `"detect"` specified, the plugin will be enabled only when building for production.|
 |`patterns`|`string[]`|<code>["./**/*.(js&#124;jsx&#124;ts&#124;tsx)"]</code>|Glob patterns to determine which files to be obfuscated. They must be relative paths from the directory where `next.config.js` is placed.|
-|`obfuscateFiles`|`Object`||Additioanl files to be obfuscated.|
+|`obfuscateFiles`|`object`||Additional files to be obfuscated.|
 |`obfuscateFiles.buildManifest`|`boolean`|`false`|If set to true, the plugin will obfuscate `_buildManifest.js`|
 |`obfuscateFiles.ssgManifest`|`boolean`|`false`|If set to true, the plugin will obfuscate `_ssgManifest.js`|
-|`obfuscateFiles.webpaack`|`boolean`|`false`|If set to true, the plugin will obfuscate `webpack.js`, which is an entry point.|
-|`obfuscateFiles.additioanlModules`|`string[]`|`[]`|Names of additioanl external modules to be obfuscated. Convenient if you are using custom npm package for instance. Use like `["module-a", "module-b", ...]`.|
-|`log`|`boolean`|`false`|If set to true, the plugin will use `console.log` as logger. Otherwise it uses webpack's standard logger.|
+|`obfuscateFiles.webpack`|`boolean`|`false`|If set to true, the plugin will obfuscate `webpack.js`, which is an entry point.|
+|`obfuscateFiles.additionalModules`|`string[]`|`[]`|Names of additional external modules to be obfuscated. Convenient if you are using custom npm package, for instance. Use like `["module-a", "module-b", ...]`.|
+|`log`|`boolean`|`false`|If set to true, the plugin will use `console.log` as logger. Otherwise, it uses webpack's standard logger.|
 
 ## How it works
 * This plugin inserts a custom loader to obfuscate project files and external modules.
 * This plugin inserts a custom plugin to obfuscate `buildManifest`, `ssgManifest`, `webpack` assets.
 
 ## Disclaimer
-Using this plugin can break your next.js app so you have to check carefully your app works fine.
+Using this plugin can break your next.js app, so you have to check carefully your app works fine.
 
 ## License
 [LICENSE](LICENSE)
