@@ -1,9 +1,14 @@
-# javascript-obfuscator plugin v2 for Next.js
+# javascript-obfuscator plugin for Next.js
 [![npm](https://img.shields.io/npm/v/nextjs-obfuscator)](https://www.npmjs.com/package/nextjs-obfuscator)
 
 The `nextjs-obfuscator` enables you to make your Next.js app difficult to be reverse-engineered, using [javascript-obfuscator](https://github.com/javascript-obfuscator/javascript-obfuscator).
 
 ### ℹ️ If you are looking for README for v1, see [here](https://github.com/mtripg6666tdr/nextjs-obfuscator/tree/v1#readme).
+
+There is some useful notes:
+- The app router is supported.
+- Build by turbopack is currently NOT supported.
+- Minimum supported Next.js version is v13.
 
 ## Installation
 You have to install javascript-obfuscator separately.
