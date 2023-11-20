@@ -7,7 +7,7 @@ The `nextjs-obfuscator` enables you to make your Next.js app difficult to be rev
 
 There are some useful notes:
 - The app router is supported.
-- Build by turbopack is currently NOT supported.
+- Building by turbopack is currently NOT supported.
 - Minimum supported Next.js version is v13.
 
 ## Installation
