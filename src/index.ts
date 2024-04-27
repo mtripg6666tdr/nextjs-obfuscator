@@ -120,7 +120,7 @@ function main(
               return true;
             }
           }else{
-            const matched = pluginOptions!.obfuscateFiles!.additionalModules!.some(mod => value.includes(`${path.sep}node_modules${path.sep}${mod}`));
+            const matched = pluginOptions.obfuscateFiles!.additionalModules!.some(mod => value.includes(`${path.sep}node_modules${path.sep}${mod}`));
             if(matched){
               logger("Matched:", value);
             }
@@ -132,7 +132,7 @@ function main(
 
       // obfuscate only if the chunk is for browser
       if(
-        pluginOptions!.enabled === true || (pluginOptions!.enabled === "detect" && !context.dev)
+        pluginOptions.enabled === true || (pluginOptions.enabled === "detect" && !context.dev)
       ){
         if(
           !context.isServer
@@ -156,12 +156,12 @@ function main(
             throw craeteError("No buildId found.");
           }
 
-          if(Object.values(pluginOptions!.obfuscateFiles!).some(val => val)){
+          if(Object.values(pluginOptions.obfuscateFiles!).some(val => val)){
             config.plugins!.push(
               new NextJSObfuscatorPlugin(
                 obfuscatorOptions as NextjsObfuscatorOptions,
                 buildId,
-                pluginOptions!.obfuscateFiles!,
+                pluginOptions.obfuscateFiles!,
                 logger,
               )
             );
