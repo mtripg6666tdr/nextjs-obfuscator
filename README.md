@@ -27,14 +27,26 @@ Wrap your configuration in your `next.config.js` to use this plugin, for example
 ```js
 const withNextJsObfuscator = require("nextjs-obfuscator")(obfuscatorOptions, pluginOptions);
 
-/** @type {import('next').NextConfig} */
+/** @type {import("next").NextConfig} */
 const nextConfig = withNextJsObfuscator({
   // ... your next.js configuration
 });
 
 module.exports = nextConfig;
 ```
-If you use some other plugins, we recommend applying this plugin later than any other ones because in most cases the obfuscation will change a large portion of the code.
+Or if you use `next.config.mjs`:
+```js
+import createNextJsObfuscator from "nextjs-obfuscator";
+
+const withNextJsObfuscator = createNextJsObfuscator(obfuscatorOptions, pluginOptions);
+
+/** @type {import("next").NextConfig} */
+const nextConfig = withNextJsObfuscator({
+  // ... your next.js configuration
+});
+
+export default nextConfig;
+```
 
 ## API
 <pre>
