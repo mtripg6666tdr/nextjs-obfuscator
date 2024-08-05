@@ -1,6 +1,6 @@
 {
   "extends": [
-    "@tsconfig/node18/tsconfig.json"
+    "@tsconfig/node16/tsconfig.json"
   ],
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
