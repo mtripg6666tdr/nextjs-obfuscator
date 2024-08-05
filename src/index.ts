@@ -1,3 +1,4 @@
+import type { ObjectWithUnconstantString, PluginOptions } from "./type";
 import type { NextConfig } from "next";
 
 import * as path from "path";
@@ -10,43 +11,8 @@ import webpack, { sources } from "webpack";
 import { writeDownWebpackConfig } from "./debug";
 import { LoggerSymbol, PublicEnvVariablesSymbol, type NextjsObfuscatorOptions } from "./type";
 
-type PluginOptions = {
-  enabled: boolean | "detect",
-  /**
-   * determines which files to be obfuscated
-   */
-  patterns: string[],
-  /**
-   * Additional files to be obfuscated
-   */
-  obfuscateFiles: Partial<{
-    buildManifest: boolean,
-    ssgManifest: boolean,
-    webpack: boolean,
-    additionalModules: string[],
-  }>,
-  /**
-   * indicates whether the plugin logs to console
-   */
-  log: boolean,
-};
-
 const craeteError = (message = "An error occurred.") =>
   new Error(`${message} If you think this is a bug of nextjs-obfuscator, please file an issue at https://github.com/mtripg6666tdr/nextjs-obfuscator/issues`);
-
-type ObjectWithUnconstantString<T extends Record<any, any>> = {
-  [key in keyof T]: Required<T>[key] extends string
-    ? string
-    : Required<T>[key] extends number
-      ? number
-      : Required<T>[key] extends string[]
-        ? string[]
-        : Required<T>[key] extends number[]
-          ? number[]
-          : Required<T>[key] extends Record<any, any>
-            ? Partial<ObjectWithUnconstantString<T[key]>>
-            : T[key]
-};
 
 function main(
   obfuscatorOptions: NextjsObfuscatorOptions | Partial<ObjectWithUnconstantString<NextjsObfuscatorOptions>>,
@@ -102,7 +68,7 @@ function main(
         for(const kv of entries){
           const key = kv?.[0];
           const value = kv?.[1];
-          if(typeof key === "string" && typeof value === "string"){
+          if(typeof key === "string" && key.startsWith("process.env.") && typeof value === "string"){
             publicEnvVariables.set(key, value);
           }
         }
