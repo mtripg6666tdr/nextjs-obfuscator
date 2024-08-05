@@ -11,7 +11,7 @@ ObfuscatorOptions,
   | "sourceMapSourcesMode"
 >;
 
-export const LoggerSymbol = Symbol.for("NextJsObfuscatorLogger");
+export const LoggerSymbol = Symbol("NextJsObfuscatorLogger");
 
 export type InternalNextjsObfuscatorOptions = NextjsObfuscatorOptions & {
   [LoggerSymbol]: (...messages: any[]) => void,
