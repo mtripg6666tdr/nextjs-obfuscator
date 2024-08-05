@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "swc -d . ./src --strip-leading-paths && tsc",
     "watch": "swc -w -d . ./src --strip-leading-paths",
-    "cleanup": "rimraf index.js index.d.ts loader.js loader.d.ts type.js type.d.ts",
+    "cleanup": "rimraf index.js index.d.ts loader.js loader.d.ts type.js type.d.ts debug.js debug.d.ts",
     "lint": "eslint ."
   },
   "keywords": [
@@ -30,6 +30,7 @@
   "dependencies": {
     "minimatch": "^9",
     "multi-stage-sourcemap": "^0.3.1",
+    "safe-traverse": "^0.2.1",
     "source-map": "^0.7.4"
   },
   "devDependencies": {

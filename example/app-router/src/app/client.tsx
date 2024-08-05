@@ -14,7 +14,7 @@ export default function Alerter(){
   return (
     <>
       <span>client component</span>
-      <span>(env: NEXT_PUBLIC_FOOBAR: ${process.env.NEXT_PUBLIC_FOOBAR})</span>
+      <span>(env: NEXT_PUBLIC_FOOBAR: {process.env.NEXT_PUBLIC_FOOBAR})</span>
     </>
   )
 }

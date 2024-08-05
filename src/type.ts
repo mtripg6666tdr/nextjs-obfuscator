@@ -12,7 +12,9 @@ ObfuscatorOptions,
 >;
 
 export const LoggerSymbol = Symbol("NextJsObfuscatorLogger");
+export const PublicEnvVariablesSymbol = Symbol("NextJsObfuscatorPublicEnvVariables");
 
 export type InternalNextjsObfuscatorOptions = NextjsObfuscatorOptions & {
   [LoggerSymbol]: (...messages: any[]) => void,
+  [PublicEnvVariablesSymbol]: Map<string, string>,
 };

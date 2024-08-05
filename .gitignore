@@ -5,6 +5,8 @@ loader.d.ts
 type.js
 type.d.ts
 index.d.ts
+debug.js
+debug.d.ts
 *.temp.*
 *.tmp.*
 *.temp
