@@ -1,50 +1,18 @@
+import type { ObjectWithUnconstantString, PluginOptions } from "./type";
 import type { NextConfig } from "next";
 
 import * as path from "path";
 
 import { obfuscate } from "javascript-obfuscator";
 import { Minimatch } from "minimatch";
+import { safeTraverse } from "safe-traverse";
 import webpack, { sources } from "webpack";
 
-import { LoggerSymbol, type NextjsObfuscatorOptions } from "./type";
-
-type PluginOptions = {
-  enabled: boolean | "detect",
-  /**
-   * determines which files to be obfuscated
-   */
-  patterns: string[],
-  /**
-   * Additional files to be obfuscated
-   */
-  obfuscateFiles: Partial<{
-    buildManifest: boolean,
-    ssgManifest: boolean,
-    webpack: boolean,
-    additionalModules: string[],
-  }>,
-  /**
-   * indicates whether the plugin logs to console
-   */
-  log: boolean,
-};
+import { writeDownWebpackConfig } from "./debug";
+import { LoggerSymbol, PublicEnvVariablesSymbol, type NextjsObfuscatorOptions } from "./type";
 
 const craeteError = (message = "An error occurred.") =>
   new Error(`${message} If you think this is a bug of nextjs-obfuscator, please file an issue at https://github.com/mtripg6666tdr/nextjs-obfuscator/issues`);
-
-type ObjectWithUnconstantString<T extends Record<any, any>> = {
-  [key in keyof T]: Required<T>[key] extends string
-    ? string
-    : Required<T>[key] extends number
-      ? number
-      : Required<T>[key] extends string[]
-        ? string[]
-        : Required<T>[key] extends number[]
-          ? number[]
-          : Required<T>[key] extends Record<any, any>
-            ? Partial<ObjectWithUnconstantString<T[key]>>
-            : T[key]
-};
 
 function main(
   obfuscatorOptions: NextjsObfuscatorOptions | Partial<ObjectWithUnconstantString<NextjsObfuscatorOptions>>,
@@ -80,20 +48,8 @@ function main(
 
     const originalWebpackFn = nextConfig.webpack;
     nextConfig.webpack = function(config: webpack.Configuration, context){
-      // @ts-ignore
-      if(pluginOptions.writeConfig){
-        require("fs").writeFileSync(
-          `./webpack-config-${Date.now()}.temp.json`,
-          JSON.stringify(
-            config,
-            (key, value) => value instanceof RegExp
-              ? { "[__type]": "RegExp", value: value.toString() }
-              : typeof value === "bigint"
-                ? { "[__type": "BigInt", value: value.toString() }
-                : value,
-            "  "
-          )
-        );
+      if("writeConfig" in pluginOptions && pluginOptions.writeConfig){
+        writeDownWebpackConfig(config);
       }
 
       const basePath = config.context!;
@@ -101,6 +57,22 @@ function main(
       if(!basePath){
         throw craeteError("No context detected.");
       }
+
+      // extract public environment variables
+      const publicEnvVariables = new Map<string, string>();
+      config.plugins?.forEach(plugin => {
+        const entries = safeTraverse(plugin)
+          .get("definitions")
+          .entries()
+          .value || [];
+        for(const kv of entries){
+          const key = kv?.[0];
+          const value = kv?.[1];
+          if(typeof key === "string" && key.startsWith("process.env.") && typeof value === "string"){
+            publicEnvVariables.set(key, value);
+          }
+        }
+      });
 
       const moduleMatcher = (value: string) => {
         if(moduleRegEx.test(value)){
@@ -120,7 +92,7 @@ function main(
               return true;
             }
           }else{
-            const matched = pluginOptions!.obfuscateFiles!.additionalModules!.some(mod => value.includes(`${path.sep}node_modules${path.sep}${mod}`));
+            const matched = pluginOptions.obfuscateFiles!.additionalModules!.some(mod => value.includes(`${path.sep}node_modules${path.sep}${mod}`));
             if(matched){
               logger("Matched:", value);
             }
@@ -132,7 +104,7 @@ function main(
 
       // obfuscate only if the chunk is for browser
       if(
-        pluginOptions!.enabled === true || (pluginOptions!.enabled === "detect" && !context.dev)
+        pluginOptions.enabled === true || (pluginOptions.enabled === "detect" && !context.dev)
       ){
         if(
           !context.isServer
@@ -146,6 +118,7 @@ function main(
               loader: require.resolve("./loader"),
               options: Object.assign({
                 [LoggerSymbol]: logger,
+                [PublicEnvVariablesSymbol]: publicEnvVariables,
               }, obfuscatorOptions),
             },
           });
@@ -156,12 +129,12 @@ function main(
             throw craeteError("No buildId found.");
           }
 
-          if(Object.values(pluginOptions!.obfuscateFiles!).some(val => val)){
+          if(Object.values(pluginOptions.obfuscateFiles!).some(val => val)){
             config.plugins!.push(
               new NextJSObfuscatorPlugin(
                 obfuscatorOptions as NextjsObfuscatorOptions,
                 buildId,
-                pluginOptions!.obfuscateFiles!,
+                pluginOptions.obfuscateFiles!,
                 logger,
               )
             );

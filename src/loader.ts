@@ -8,24 +8,27 @@ import * as path from "path";
 import { obfuscate } from "javascript-obfuscator";
 import { transfer as transferSourceMap } from "multi-stage-sourcemap";
 
-import { LoggerSymbol } from "./type";
+import { LoggerSymbol, PublicEnvVariablesSymbol } from "./type";
 
 function loader(this: webpack.LoaderContext<InternalNextjsObfuscatorOptions>, source: string, map: RawSourceMap){
   const moduleRelativePath = path.relative(this.rootContext, this.resourcePath);
-
   const options = this.getOptions();
-
-  const logger = options[LoggerSymbol] as ((...messages: any[]) => void);
-
+  const logger = options[LoggerSymbol];
+  const publicEnvVariables = options[PublicEnvVariablesSymbol];
   const sourceMapRequired = options.sourceMap;
-  const obfuscationResult = obfuscate(
-    source,
-    Object.assign(options, {
-      ignoreRequireImports: true,
-      inputFileName: moduleRelativePath,
-      sourceMapMode: "separate",
-    }),
-  );
+
+  for(const [key, value] of publicEnvVariables.entries()){
+    source = source.replaceAll(key, value);
+  }
+
+  const finalOptions = Object.assign(options, {
+    ignoreRequireImports: true,
+    inputFileName: moduleRelativePath,
+    sourceMapMode: "separate",
+  });
+
+  // obfuscation
+  const obfuscationResult = obfuscate(source, finalOptions);
   const obfuscated = obfuscationResult.getObfuscatedCode();
 
   logger("Obfuscated:", moduleRelativePath, source.length, "->", obfuscated.length);
@@ -38,12 +41,6 @@ function loader(this: webpack.LoaderContext<InternalNextjsObfuscatorOptions>, so
       toSourceMap: map,
     });
   }
-
-  // const now = Date.now();
-  // fs.writeFileSync(`./${now}.pre.js`, source);
-  // map && fs.writeFileSync(`./${now}.pre.js.map`, JSON.stringify(map));
-  // fs.writeFileSync(`./${now}.post.js`, obfuscated);
-  // sourceMap && fs.writeFileSync(`./${now}.post.js.map`, sourceMap);
 
   this.callback(null, obfuscated, sourceMap);
 }

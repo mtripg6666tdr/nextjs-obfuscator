@@ -16,7 +16,10 @@ const withNextjsObfuscator = require("../..")(
 const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
-  }
+  },
+  env: {
+    NEXT_PUBLIC_FOOBAR: "foobar",
+  },
 };
 
 module.exports = withNextjsObfuscator(nextConfig);
