@@ -6,8 +6,8 @@
   "types": "./index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "swc -d . ./src&&tsc",
-    "watch": "swc -w -d . ./src",
+    "build": "swc -d . ./src --strip-leading-paths && tsc",
+    "watch": "swc -w -d . ./src --strip-leading-paths",
     "cleanup": "rimraf index.js index.d.ts loader.js loader.d.ts type.js type.d.ts",
     "lint": "eslint ."
   },
@@ -33,9 +33,9 @@
     "source-map": "^0.7.4"
   },
   "devDependencies": {
-    "@mtripg6666tdr/eslint-config": "^3.0.18",
-    "@swc/cli": "^0.3.12",
-    "@swc/core": "^1.5.25",
+    "@mtripg6666tdr/eslint-config": "^3.0.19",
+    "@swc/cli": "^0.4.0",
+    "@swc/core": "^1.7.6",
     "@types/loader-utils": "^2.0.6",
     "@types/multi-stage-sourcemap": "^0.3.4",
     "@types/react": "^18.3.3",
@@ -44,9 +44,9 @@
     "eslint": "^8.54.0",
     "javascript-obfuscator": "*",
     "next": "*",
-    "rimraf": "^5.0.7",
-    "typescript": "^5.4.5",
-    "webpack": "^5.91.0"
+    "rimraf": "^6.0.1",
+    "typescript": "^5.5.4",
+    "webpack": "^5.93.0"
   },
   "peerDependencies": {
     "javascript-obfuscator": "^4.0.0",
