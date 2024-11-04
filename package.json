@@ -35,24 +35,24 @@
   },
   "devDependencies": {
     "@mtripg6666tdr/eslint-config": "^3.0.19",
-    "@swc/cli": "^0.4.0",
-    "@swc/core": "^1.7.6",
+    "@swc/cli": "^0.5.0",
+    "@swc/core": "^1.8.0",
     "@tsconfig/node16": "^16.1.3",
     "@types/loader-utils": "^2.0.6",
     "@types/multi-stage-sourcemap": "^0.3.4",
-    "@types/react": "^18.3.3",
-    "@types/react-dom": "^18.3.0",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
     "chokidar": "^3.6.0",
     "eslint": "^8.54.0",
     "javascript-obfuscator": "*",
     "next": "*",
     "rimraf": "^6.0.1",
-    "typescript": "^5.5.4",
-    "webpack": "^5.93.0"
+    "typescript": "^5.6.3",
+    "webpack": "^5.96.1"
   },
   "peerDependencies": {
     "javascript-obfuscator": "^4.0.0",
-    "next": "^13.0.0 || ^14.0.0"
+    "next": "^13.0.0 || ^14.0.0 || ^15.0.0"
   },
   "engines": {
     "node": ">=16.14.0"
