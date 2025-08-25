@@ -17,8 +17,11 @@ function loader(this: webpack.LoaderContext<InternalNextjsObfuscatorOptions>, so
   const publicEnvVariables = options[PublicEnvVariablesSymbol];
   const sourceMapRequired = options.sourceMap;
 
-  for(const [key, value] of publicEnvVariables.entries()){
-    source = source.replaceAll(key, value);
+  const sortedEntries = Array.from(publicEnvVariables.entries())
+        .sort(([keyA], [keyB]) => keyB.length - keyA.length);
+    
+  for (const [key, value] of sortedEntries){
+      source = source.replaceAll(key, value);
   }
 
   const finalOptions = Object.assign(options, {
